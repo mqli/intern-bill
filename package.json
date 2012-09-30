@@ -1,0 +1,9 @@
+{
+  "name": "intern-bill",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "",
+    "jade": "",
+    "mongoose": ""
+  }
+}
