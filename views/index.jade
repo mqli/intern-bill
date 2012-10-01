@@ -1,2 +1,25 @@
-h1= title
-p Welcome to #{title}
+!!!
+html
+  head
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    //if lt IE 10
+      script(src='/javascripts/lib/es5-shim.js')
+    script(src='/javascripts/lib/jquery-1.8.2.js')
+    script(src='/javascripts/lib/bootstrap.js')
+    style
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+  body
+    div.navbar.navbar-inverse.navbar-fixed-top
+      div.navbar-inner
+        div.container
+          a.brand(href='#') Intern Bill System
+    div.container
+      div.row
+        div.span2
+          ul.nav.nav-tabs.nav-stacked
+            li: a(href='/hospital') hospital
+            li: a(href='/class') classes
+            li: a(href='/bill') bills

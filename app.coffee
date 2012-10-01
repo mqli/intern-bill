@@ -1,11 +1,15 @@
 express = require 'express'
+mongoose = require 'mongoose'
+
 fs = require 'fs'
+config = require './config.coffee'
 
 app = module.exports = express()
 
 app.configure ->
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
+  app.use express.logger 'dev' 
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser() 
@@ -24,13 +28,14 @@ app.configure 'development', ->
 app.configure 'production', ->
   app.use express.errorHandler()
 
-fs.readdirSync(__dirname + '/routes').forEach ->
-  if '.js' != name.substr -3 
+require('./models/models.coffee')(mongoose);
+
+fs.readdirSync(__dirname + '/routes').forEach (name)->
+  if '.coffee' == name.substr -7 
+    console.log 'routes file:' +  name
     require(__dirname + '/routes/' + name)(app)
 
-app.get '/', (req, res) ->
-  res.render 'index', title: 'Express'
-
-if !module.parent
-  app.listen 3000
-  console.log 'Express server listening on port %d', 3000
+mongoose.connect(config.MONGO_HOST, config.MONGO_DB, config.MONGO_PORT);
+console.log 'mongo connect on port %d',  config.MONGO_PORT
+app.listen config.SERVER_PORT
+console.log 'Express server listening on port %d', config.SERVER_PORT

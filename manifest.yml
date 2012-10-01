@@ -1,0 +1,16 @@
+--- 
+applications: 
+  .: 
+    mem: 64M
+    name: intern-bill
+    services: 
+      intern-bill-db: 
+        type: mongodb
+    instances: 1
+    framework: 
+      name: node
+      info: 
+        exec: 
+        mem: 64M
+        description: Node.js Application
+    url: ${name}.${target-base}
