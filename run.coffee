@@ -4,6 +4,10 @@ mongoose = require 'mongoose'
 fs = require 'fs'
 config = require './config.coffee'
 
+
+mongoose.connect(config.MONGO_HOST, config.MONGO_DB, config.MONGO_PORT);
+console.log 'mongo connect on port %d',  config.MONGO_PORT
+
 app = module.exports = express()
 
 app.configure ->
@@ -30,7 +34,5 @@ fs.readdirSync(__dirname + '/routes').forEach (name)->
     console.log 'routes file:' +  name
     require(__dirname + '/routes/' + name)(app)
 
-mongoose.connect(config.MONGO_HOST, config.MONGO_DB, config.MONGO_PORT);
-console.log 'mongo connect on port %d',  config.MONGO_PORT
 app.listen config.SERVER_PORT
 console.log 'Express server listening on port %d', config.SERVER_PORT
