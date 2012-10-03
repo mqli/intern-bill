@@ -9,7 +9,15 @@ module.exports = (mongoose)->
     name: String
     amount: Number
     time: Number
-  
+    period: Number
+    hospitals: [String]
+    records: [
+      name: String
+      amount: Number
+      start: Number
+      end: Number
+    ]
+ 
   mongoose.model 'Record', new mongoose.Schema
     hospital: String
     class: String

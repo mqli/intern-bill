@@ -1,0 +1,58 @@
+include includes/header.jade
+  script(src='/javascripts/schedule.coffee', type="text/coffeescript")
+div.container
+  div.row
+    div.span8
+      table#classes.table.table-bordered.table-hover
+        thead: tr
+          th
+          - for (var i =1; i <= clazz.time; i+=clazz.period)
+            th
+              |#{i}-
+              =i+clazz.period-1
+        tbody
+          for hospital in clazz.hospitals
+            tr
+              td=hospital
+              - for (var i =1; i <= clazz.time; i+=clazz.period)
+                td
+                  - var amount = 0
+                  for record in clazz.groupedRecords[hospital]
+                    if(record.start <= i && record.end >= i)
+                     - amount+=record.amount
+                  =amount
+    div.span4.offset8(data-spy="affix")
+      form(action="/class/#{clazz._id}/schedule/new", method="post")
+        div.alert.hide
+        label hospital:
+        select(name="record[name]",required, placeHolder="hospital")
+          for hospital in clazz.hospitals
+            option=hospital
+        label amount:
+        input(name="record[amount]",required, type="number", placeHolder="amount")
+        label start:
+        select(name="record[start]",required)
+          - for (var i =1; i <= clazz.time; i+=clazz.period)
+            option(value="#{i}") #{i}
+        label end:
+        select(name="record[end]",required)
+          - for (var i =1; i <= clazz.time; i+=clazz.period)
+            option(value="#{i+3}") #{i+3}
+        button.btn.btn-primary.offset3 add
+  div.row
+    div.span4
+      table.table.table-bordered.table-hover
+        thead: tr
+          th hospital
+          th start
+          th end
+          th amount
+          th delete
+        tbody 
+          for record in clazz.records
+            tr 
+              td=record.name
+              td=record.start
+              td=record.end
+              td=record.amount
+              td: a(href="/class/#{clazz._id}/schedule/remove/#{record._id}") delete

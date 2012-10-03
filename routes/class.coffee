@@ -1,17 +1,21 @@
 mongoose = require 'mongoose'
 Class = mongoose.model('Class')
-Record = mongoose.model('Record')
+Hospital = mongoose.model('Hospital')
 
 module.exports = (app) ->
   app.get '/class', (req, res) ->
     Class.find (err, classes)->
-      res.render 'class', classes: classes
+      Hospital.find (err, hospitals) ->
+        res.render 'class',
+          classes: classes
+          hospitals:hospitals
 
   app.post '/class/new', (req, res) ->
     Class.count name: req.body.class.name, (err, count)->
       if count > 0
         return res.json error: 'duplicate class name'
-      new Class(req.body.class).save (err, clazz) ->
+      clazz = req.body.class
+      new Class(clazz).save (err, clazz) ->
         res.json class: clazz;
 
   app.get '/class/remove/:id', (req, res) ->

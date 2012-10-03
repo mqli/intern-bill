@@ -18,8 +18,11 @@ html
           a.brand(href='#') Intern Bill System
     div.container
       div.row
-        div.span2
-          ul.nav.nav-tabs.nav-stacked
-            li: a(href='/hospital') hospital
-            li: a(href='/class') classes
-            li: a(href='/bill') bills
+        div.span2.offset4
+          form(action="/login",method="post")
+            legend login
+            label username
+            input(name="username",type="text") 
+            label password
+            input(name="password",type="password")
+            button.btn.btn-primary.offset2 add 
