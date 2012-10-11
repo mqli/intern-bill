@@ -1,0 +1,76 @@
+include includes/header
+  script(src='/javascripts/lib/jade.js')
+  script(src='/javascripts/bill.js')
+  script#hospital_option(type="template/jade").
+    option(value="\#{_id}")=name
+  script#alert_template(type="template/jade").
+    div.alert
+      button.close(data-dismiss="alert") ×
+      |\#{message}
+  script#bill_template(type="template/jade").
+    div(id="\#{_id}")
+      h5 name: \#{name}
+      h5 price: \#{price}
+      table.table.table-bordered.table-hover
+        thead: tr
+          th class
+          th amount
+          th time
+          th: a(href="/tools/bill/remove/\#{_id}")  delete
+        tbody
+        - var total = 0
+        for student, i in students
+          - total += total + student.time * student.amount * price
+          tr
+            td=student.name
+            td=student.amount
+            td=student.time
+            td: a(href="/tools/bill/\#{_id}/student/remove/\#{student._id}") delete
+        tr
+          td total
+          td(colspan="5") \#{total}
+div.container
+  div.row
+    div#bills.span8
+      for bill in bills
+        div(id="#{bill._id}")
+          h5 name: #{bill.name}
+          h5 price: #{bill.price}
+          table.table.table-bordered.table-hover
+            thead: tr
+              th class
+              th amount
+              th time
+              th
+                a(href="/tools/bill/remove/#{bill._id}") delete
+            tbody
+              - var total = 0
+              for student, i in bill.students
+                - total += total + student.time * student.amount * bill.price
+                tr
+                  td=student.name
+                  td=student.amount
+                  td=student.time
+                  td: a(href="/tools/bill/#{bill._id}/student/remove/#{student._id}") delete
+              tr
+                td total
+                td(colspan="3") #{total}
+    div#forms.span4.offset8(data-spy="affix")
+      form#hospital_form(action="/tools/bill/add",method="post")
+        label name:
+        input(name="bill[name]", type="text", required="", placeholder="hospital name")
+        label price:
+        input(name="bill[price]",type="number", required="", placeholder="hospital price")
+        button.btn.btn-primary.offset3 add
+      form#student_form(action="/tools/bill/student/add",method="post")
+        label class:
+        input(name="student[name]", type="text", required="", placeholder="hospital name")
+        label amount:
+        input(name="student[amount]",type="number", required="", placeholder="hospital price")
+        label time:
+        input(name="student[time]",type="number", required="", placeholder="hospital price")
+        label hospital:
+        select(name="billId",type="text", required="")
+          for bill in bills
+            option(value="#{bill._id}")=bill.name
+        button.btn.btn-primary.offset3 add

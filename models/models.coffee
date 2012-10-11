@@ -23,3 +23,8 @@ module.exports = (mongoose)->
     class: String
     amount: Number
     time: Number
+
+  mongoose.model 'Bill', new mongoose.Schema
+    name : String
+    price : Number
+    students : [name: String, amount: Number, time: Number]
