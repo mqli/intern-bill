@@ -6,7 +6,7 @@ module.exports = (app) ->
   app.all '*', (req, res, next) ->
     #if req.ip is '127.0.0.1' 
     #  return next()
-    if req.path.indexOf('/class') == 0 or req.path.indexOf('/hospital') ==0
+    if req.path.indexOf('/class') == 0 or req.path.indexOf('/hospital') ==0  or req.path.indexOf('/bill') ==0
       if !req.session.username 
         return res.redirect '/' 
     return next()

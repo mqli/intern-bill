@@ -16,7 +16,7 @@ include includes/header
           th class
           th amount
           th time
-          th: a(href="/tools/bill/remove/\#{_id}")  delete
+          th: a(href="/bill/remove/\#{_id}")  delete
         tbody
         - var total = 0
         for student, i in students
@@ -25,7 +25,7 @@ include includes/header
             td=student.name
             td=student.amount
             td=student.time
-            td: a(href="/tools/bill/\#{_id}/student/remove/\#{student._id}") delete
+            td: a(href="/bill/\#{_id}/student/remove/\#{student._id}") delete
         tr
           td total
           td(colspan="5") \#{total}
@@ -42,7 +42,7 @@ div.container
               th amount
               th time
               th
-                a(href="/tools/bill/remove/#{bill._id}") delete
+                a(href="/bill/remove/#{bill._id}") delete
             tbody
               - var total = 0
               for student, i in bill.students
@@ -51,24 +51,24 @@ div.container
                   td=student.name
                   td=student.amount
                   td=student.time
-                  td: a(href="/tools/bill/#{bill._id}/student/remove/#{student._id}") delete
+                  td: a(href="/bill/#{bill._id}/student/remove/#{student._id}") delete
               tr
                 td total
                 td(colspan="3") #{total}
     div#forms.span4.offset8(data-spy="affix")
-      form#hospital_form(action="/tools/bill/add",method="post")
+      form#hospital_form(action="/bill/add",method="post")
         label name:
         input(name="bill[name]", type="text", required="", placeholder="hospital name")
         label price:
         input(name="bill[price]",type="number", required="", placeholder="hospital price")
         button.btn.btn-primary.offset3 add
-      form#student_form(action="/tools/bill/student/add",method="post")
+      form#student_form(action="/bill/student/add",method="post")
         label class:
-        input(name="student[name]", type="text", required="", placeholder="hospital name")
+        input(name="student[name]", type="text", required="", placeholder="class name")
         label amount:
-        input(name="student[amount]",type="number", required="", placeholder="hospital price")
+        input(name="student[amount]",type="number", required="", placeholder="amount")
         label time:
-        input(name="student[time]",type="number", required="", placeholder="hospital price")
+        input(name="student[time]",type="number", required="", placeholder="time")
         label hospital:
         select(name="billId",type="text", required="")
           for bill in bills

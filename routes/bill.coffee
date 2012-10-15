@@ -8,8 +8,8 @@ module.exports = (app) ->
         bills: bills
 
   app.post '/bill/add', (req, res) ->
-    Bill.count name: req.body.bill.name, (req, res) ->
-      return res.json message: 'duplicate name #{req.body.bill.name}' if  count > 0 
+    Bill.count name: req.body.bill.name, (error, count) ->
+      return res.json message: 'duplicate name: ' + req.body.bill.name if  count > 0 
       new Bill(req.body.bill).save (error, bill) -> res.json bill: bill
 
   app.get '/bill/remove/:billId', (req, res) ->
