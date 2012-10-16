@@ -1,0 +1,28 @@
+include includes/header
+div.container
+  div.row
+    div#bills.span8
+      h2 name: #{className}
+      table.table.table-bordered.table-hover
+        thead: tr
+          th hospital
+          th price
+          th amount
+          th time
+          th total
+        tbody
+          - var classTotal = 0
+          for bill in bills
+            - var total = 0
+            for student, i in bill.students
+              - total += total + student.time * student.amount * bill.price
+              tr
+                td=bill.name
+                td=bill.price
+                td=student.amount
+                td=student.time
+                td #{total}
+            - classTotal += total
+          tr
+            td total
+            td(colspan="4") #{classTotal}

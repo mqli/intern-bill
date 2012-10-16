@@ -27,3 +27,11 @@ module.exports = (app) ->
     Bill.findById req.params.billId, (err, bill) ->
       bill.students.id(req.params.sutdentId).remove (err, student) ->
         bill.save -> res.json bill
+  app.get '/bill/class/:className', (req, res) ->
+    Bill.find 'students.name':  req.params.className, (err, bills) ->
+      bills.forEach (bill) ->
+        bill.students = bill.students.filter (student) ->
+          return student.name == req.params.className
+      res.render 'bill-by-class' 
+        className: req.params.className
+        bills: bills

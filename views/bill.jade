@@ -22,7 +22,7 @@ include includes/header
         for student, i in students
           - total += total + student.time * student.amount * price
           tr
-            td=student.name
+            td: a(href='/bill/class/\#{student.name}')=student.name
             td=student.amount
             td=student.time
             td: a(href="/bill/\#{_id}/student/remove/\#{student._id}") delete
@@ -48,7 +48,7 @@ div.container
               for student, i in bill.students
                 - total += total + student.time * student.amount * bill.price
                 tr
-                  td=student.name
+                  td: a(href='/bill/class/#{student.name}')=student.name
                   td=student.amount
                   td=student.time
                   td: a(href="/bill/#{bill._id}/student/remove/#{student._id}") delete

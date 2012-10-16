@@ -50,7 +50,7 @@ $(function  () {
     });
   });
   //remove student
-  $(document).on('click', '#bills tbody a', function (event) {
+  $(document).on('click', '#bills tbody a[href*="/student/remove"]', function (event) {
     var $a = $(this);
     event.preventDefault();
     $.get($a.attr('href'), function (bill) {
