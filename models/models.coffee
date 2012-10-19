@@ -27,4 +27,4 @@ module.exports = (mongoose)->
   mongoose.model 'Bill', new mongoose.Schema
     name : String
     price : Number
-    students : [name: String, amount: Number, time: Number]
+    students : [name: String, amount: Number, time: Number, type:{type: String, default: '毕业实习'}]

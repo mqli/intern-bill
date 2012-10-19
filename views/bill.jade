@@ -9,68 +9,81 @@ include includes/header
       |\#{message}
   script#bill_template(type="template/jade").
     div(id="\#{_id}")
-      h5 name: \#{name}
-      h5 price: \#{price}
+      h5 医院: \#{name}
+      h5 经费标准: \#{price}
       table.table.table-bordered.table-hover
         thead: tr
-          th class
-          th amount
-          th time
+            th 班级
+            th 项目
+            th 时长
+            th 时间（周）
+            th 合计
           th: a(href="/bill/remove/\#{_id}")  delete
         tbody
         - var total = 0
         for student, i in students
-          - total += total + student.time * student.amount * price
+          - total += student.time * student.amount * price
           tr
             td: a(href='/bill/class/\#{student.name}')=student.name
+            td=student.type
             td=student.amount
             td=student.time
+            td=student.time * student.amount * bill.price
             td: a(href="/bill/\#{_id}/student/remove/\#{student._id}") delete
         tr
-          td total
+          td 合计（元）
           td(colspan="5") \#{total}
 div.container
   div.row
     div#bills.span8
       for bill in bills
         div(id="#{bill._id}")
-          h5 name: #{bill.name}
-          h5 price: #{bill.price}
+          h5 医院: #{bill.name}
+          h5 经费标准: #{bill.price}
           table.table.table-bordered.table-hover
             thead: tr
-              th class
-              th amount
-              th time
+              th 班级
+              th 项目
+              th 人数
+              th 时长（周）
+              th 合计
               th
                 a(href="/bill/remove/#{bill._id}") delete
             tbody
               - var total = 0
               for student, i in bill.students
-                - total += total + student.time * student.amount * bill.price
+                - total += student.time * student.amount * bill.price
                 tr
                   td: a(href='/bill/class/#{student.name}')=student.name
+                  td=student.type
                   td=student.amount
                   td=student.time
+                  td=student.time * student.amount * bill.price
                   td: a(href="/bill/#{bill._id}/student/remove/#{student._id}") delete
               tr
-                td total
-                td(colspan="3") #{total}
+                td 合计（元）
+                td(colspan="5") #{total}
     div#forms.span4.offset8(data-spy="affix")
+      button#hide.btn.btn-primary 拷贝模式
       form#hospital_form(action="/bill/add",method="post")
         label name:
         input(name="bill[name]", type="text", required="", placeholder="hospital name")
         label price:
-        input(name="bill[price]",type="number", required="", placeholder="hospital price")
+        input(name="bill[price]",type="text", required="", placeholder="hospital price")
         button.btn.btn-primary.offset3 add
       form#student_form(action="/bill/student/add",method="post")
         label class:
         input(name="student[name]", type="text", required="", placeholder="class name")
+        label type:
+        select(name="student[type]", required="")
+          for type in ['毕业实习','教学实习','诊断见习','护理实习','护理实习（二）','护理临床见习']
+            option(value="#{type}")=type
         label amount:
         input(name="student[amount]",type="number", required="", placeholder="amount")
         label time:
         input(name="student[time]",type="number", required="", placeholder="time")
         label hospital:
-        select(name="billId",type="text", required="")
+        select(name="billId", required="")
           for bill in bills
             option(value="#{bill._id}")=bill.name
         button.btn.btn-primary.offset3 add

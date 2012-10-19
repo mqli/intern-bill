@@ -40,7 +40,12 @@ $(function  () {
      $('select[name="billId"] option[value="' + result.bill._id + '"]').remove();
     });
   });
-
+  $('#hide').click(function (){
+    $('th:last-child a,td:last-child a').parent().hide();
+    $('td:first-child a').parent().html(function(){
+      return $(this).find('a').text();
+    });
+  });
   $('#student_form').submit(function (event) {
     var $form = $(this);
     event.preventDefault();

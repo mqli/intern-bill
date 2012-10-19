@@ -2,14 +2,15 @@ include includes/header
 div.container
   div.row
     div#bills.span8
-      h2 name: #{className}
+      h2 班级: #{className}
       table.table.table-bordered.table-hover
         thead: tr
-          th hospital
-          th price
-          th amount
-          th time
-          th total
+          th 医院
+          th 经费标准
+          th 人数
+          th 时长
+          th 项目
+          th 合计（元）
         tbody
           - var classTotal = 0
           for bill in bills
@@ -21,8 +22,9 @@ div.container
                 td=bill.price
                 td=student.amount
                 td=student.time
+                td=student.type
                 td #{total}
             - classTotal += total
           tr
-            td total
-            td(colspan="4") #{classTotal}
+            td 合计（元）
+            td(colspan="5") #{classTotal}
