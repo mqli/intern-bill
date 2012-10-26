@@ -62,4 +62,5 @@ $(function  () {
       $('#' + bill._id).html(bill_template(bill));
     });
   });
+  $(document).on('click', '#bill ')
 });

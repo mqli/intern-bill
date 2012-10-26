@@ -10,7 +10,7 @@ include includes/header
   script#bill_template(type="template/jade").
     div(id="\#{_id}")
       h5 医院: \#{name}
-      h5 经费标准: \#{price}
+      h5 经费标准: \#{price}元/周/生
       table.table.table-bordered.table-hover
         thead: tr
             th 班级
@@ -39,7 +39,7 @@ div.container
       for bill in bills
         div(id="#{bill._id}")
           h5 医院: #{bill.name}
-          h5 经费标准: #{bill.price}
+          h5 经费标准: #{bill.price}元/周/生
           table.table.table-bordered.table-hover
             thead: tr
               th 班级
@@ -63,6 +63,15 @@ div.container
               tr
                 td 合计（元）
                 td(colspan="5") #{total}
+    div.modal.hide.fade
+      div.modal-header
+        button.close(type="button",data-dismiss="modal",aria-hidden="true") x
+        h3 Modal header
+      div.modal-body
+        p One fine body
+      div.modal-footer
+        a(href="#").btn close
+        a(href="#").btn.btn-primary Save changes
     div#forms.span4.offset8(data-spy="affix")
       button#hide.btn.btn-primary 拷贝模式
       form#hospital_form(action="/bill/add",method="post")

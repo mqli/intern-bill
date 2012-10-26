@@ -12,6 +12,11 @@ module.exports = (app) ->
       return res.json message: 'duplicate name: ' + req.body.bill.name if  count > 0 
       new Bill(req.body.bill).save (error, bill) -> res.json bill: bill
 
+  app.post '/bill/update/:billId', (req, res) ->
+    Bill.findById req.params.billId, (err, bill) ->
+      bill.update req.body.bill, ->
+        res.redirect '/bill'
+        
   app.get '/bill/remove/:billId', (req, res) ->
     Bill.findById req.params.billId, (err, bill) ->
       return  res.json message: 'can not delete' if  bill.students.length > 0 

@@ -14,9 +14,8 @@ div.container
         tbody
           - var classTotal = 0
           for bill in bills
-            - var total = 0
             for student, i in bill.students
-              - total += total + student.time * student.amount * bill.price
+              - var total = student.time * student.amount * bill.price
               tr
                 td=bill.name
                 td=bill.price
@@ -24,7 +23,7 @@ div.container
                 td=student.time
                 td=student.type
                 td #{total}
-            - classTotal += total
+              - classTotal += total
           tr
             td 合计（元）
             td(colspan="5") #{classTotal}

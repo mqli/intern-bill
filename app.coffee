@@ -17,9 +17,9 @@ app.configure ->
   app.use app.router 
   app.use express.static __dirname + '/public'
   app.use (req, res, next) ->
-    if req.ip == '127.0.0.1' or 
-      Auth.checkAuth req.path, req.session.username
-       return next()
+    if req.session.username or req.path.indexOf('/bill') < 0 or
+      req.ip is '127.0.0.1'
+        return next()
     res.redirect '/'
 
 app.configure 'development', ->
