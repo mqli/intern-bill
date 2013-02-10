@@ -8,6 +8,10 @@ html
     script(src='/javascripts/lib/bootstrap.js')
     script(src='/javascripts/lib/jade.js')
     script(src='/javascripts/lib/coffee-script.js')
+    script
+      $(function(){
+        $('a[href="' + window.location.pathname + '"]').parent().addClass('active');
+      });
     style
       body {
         padding-top: 60px;
@@ -25,7 +29,7 @@ html
       div.row
         div.span12
           ul.nav.nav-tabs
-            li: a(href='/hospital') hospital
-            li: a(href='/class') class
-            li: a(href='/bill') bill
-          
+            li: a(href='/bill/2012') 2012
+            li: a(href='/bill/2013') 2013
+            li: a(href='/bill/2014') 2014
+            li: a(href='/bill/2015') 2015

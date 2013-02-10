@@ -1,7 +1,7 @@
 module.exports = (app) ->
   app.get '/', (req, res) ->
     if req.session.username 
-      return res.redirect '/hospital'
+      return res.redirect '/bill/2012'
     res.render 'index'
   app.all '*', (req, res, next) ->
     #if req.ip is '127.0.0.1' 

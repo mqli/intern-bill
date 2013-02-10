@@ -1,14 +1,15 @@
 mongoose = require 'mongoose'
 Bill = mongoose.model('Bill')
 module.exports = (app) ->
-  app.get '/bill', (req, res) ->
-    Bill.find (err, bills) -> 
-      res.render 'bill' 
+  app.get '/bill/:category', (req, res) ->
+    Bill.find category: req.param('category'), (err, bills) -> 
+      res.render 'bill'
+        category: req.param('category')
         username: req.session.username
         bills: bills
 
   app.post '/bill/add', (req, res) ->
-    Bill.count name: req.body.bill.name, (error, count) ->
+    Bill.count name: req.body.bill.name,category: req.body.bill.category, (error, count) ->
       return res.json message: 'duplicate name: ' + req.body.bill.name if  count > 0 
       new Bill(req.body.bill).save (error, bill) -> res.json bill: bill
 

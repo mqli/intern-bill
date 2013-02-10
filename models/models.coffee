@@ -25,6 +25,8 @@ module.exports = (mongoose)->
     time: Number
 
   mongoose.model 'Bill', new mongoose.Schema
-    name : String
-    price : Number
+    name: String
+    category:
+      type: String, default: '2012' 
+    price: Number
     students : [name: String, amount: Number, time: Number, type:{type: String, default: '毕业实习'}]

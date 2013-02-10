@@ -13,11 +13,11 @@ include includes/header
       h5 经费标准: \#{price}元/周/生
       table.table.table-bordered.table-hover
         thead: tr
-            th 班级
-            th 项目
-            th 时长
-            th 时间（周）
-            th 合计
+          th 班级
+          th 项目
+          th 时长
+          th 时间（周）
+          th 合计
           th: a(href="/bill/remove/\#{_id}")  delete
         tbody
         - var total = 0
@@ -75,6 +75,7 @@ div.container
     div#forms.span4.offset8(data-spy="affix")
       button#hide.btn.btn-primary 拷贝模式
       form#hospital_form(action="/bill/add",method="post")
+        input(name="bill[category]",type="hidden", value="#{category}")
         label name:
         input(name="bill[name]", type="text", required="", placeholder="hospital name")
         label price:
